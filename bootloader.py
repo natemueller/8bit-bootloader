@@ -64,16 +64,16 @@ for addr in range(0, 16):
     for bit in range(0, 8):
         DATA_LINES[7 - bit].value((data >> bit) & 1)
 
-    time.sleep_ms(100)
+    time.sleep_ms(10)
 
     WRITE_ENABLE.off()
-    time.sleep_ms(200)
+    time.sleep_ms(10)
     WRITE_ENABLE.on()
 
     time.sleep_ms(WRITE_DELAY_MS)
 
 RESET.on()
-time.sleep_ms(100)
+time.sleep_ms(10)
 RESET.off()
 
 list(map(lambda p: p.init(p.IN), ADDR_LINES))
