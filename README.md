@@ -27,10 +27,10 @@ would greatly simplify the wiring (six connections from the ESP32 vs
 
 I used the [HiLegto
 ESP-WROOM-32](https://www.amazon.com/dp/B0718T232Z) board.  It exposes
-all of the ESP32's GPIO ports, and is narrow enough to fit on a
+all of the ESP32's GPIO pins, and is narrow enough to fit on a
 breadboard with one row of holes on each side.  Besides that, there's
 nothing special about this particular board.  The code should work
-anywhere.  But be aware that the mapping of GPIO port to breakout
+anywhere.  But be aware that the mapping of GPIO pin to breakout
 board pin isn't standard.  If you use another board you won't be able
 to copy my wiring.
 
@@ -63,9 +63,10 @@ this is equally easy on Linux or Windows but I don't know the details.
 
 ```bash
 wget https://micropython.org/resources/firmware/esp32-idf4-20200902-v1.13.bin
-sudo pip3 install git+https://github.com/natemueller/ampy.git@96936f946a32fba8d89c5607fb60e2cef83f4f1a
 esptool.py --port /dev/tty.usbserial-0001 -c esp32 erase_flash
 esptool.py --port /dev/tty.usbserial-0001 -c esp32 write_flash -z 0x1000 esp32-idf4-20200902-v1.13.bin
+
+sudo pip3 install git+https://github.com/natemueller/ampy.git@96936f946a32fba8d89c5607fb60e2cef83f4f1a
 ampy --port /dev/tty.usbserial-0001 put bootloader.py main.py
 ```
 
@@ -73,3 +74,12 @@ Note that I had to use a patched version of ampy to talk to the
 MicroPython interpreter on the ESP-WROOM-32.  See
 scientifichackers/ampy#19.  Depending on your OS or breakout board you
 may not need to worry about this.
+
+## Wiring
+
+![wiring image](wiring/whole-board.png?raw=True)
+
+Basically, wire the GPIO pins in parallel with the RAM module DIP
+switches, program button, reset button and the clock mode toggle
+switch.  See the [wiring photos](wiring) if you want to see the
+details.  You can see the GPIO pin numbers in the bootloader source.
